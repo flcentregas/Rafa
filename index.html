@@ -1025,10 +1025,12 @@
 
                 const data = await response.json();
 
-                document.getElementById('resDistancia').innerText = data.distanciaTexto;
-                document.getElementById('resTempo').innerText = data.tempoTexto;
-                document.getElementById('resCustoKm').innerText = data.custoPorKm.toFixed(2).replace('.', ',');
-                document.getElementById('resCustoTotal').innerText = data.custoTotalViagem.toFixed(2).replace('.', ',');
+                console.log("Resposta da API:", data);
+
+                // document.getElementById('resDistancia').innerText = data.distanciaTexto;
+                // document.getElementById('resTempo').innerText = data.tempoTexto;
+                // document.getElementById('resCustoKm').innerText = data.custoPorKm.toFixed(2).replace('.', ',');
+                // document.getElementById('resCustoTotal').innerText = data.custoTotalViagem.toFixed(2).replace('.', ',');
 
                 blocoResultado.classList.remove('d-none');
 
