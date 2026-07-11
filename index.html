@@ -395,11 +395,11 @@
     
     <div class="content pt-0">
         
-      <div id="section-simulador" class="page-section mt-0 py-5">
+     <div id="section-simulador" class="page-section mt-0 py-5">
     <div class="container">
-        <div class="heading-block text-center">
+        <div class="heading-block text-center mb-5">
             <h2>Simule seu Frete em Segundos</h2>
-            <span>Insira as informações de origem, destino e veículo para obter uma estimativa de custos em tempo real.</span>
+            <span class="text-muted">Insira as informações de origem, destino e veículo para obter uma estimativa de custos em tempo real.</span>
         </div>
 
         <form id="formCalculo" class="m-0">
@@ -450,46 +450,20 @@
             <div class="row g-3 justify-content-center">
                 <div class="col-md-3 col-6">
                     <div class="card h-100 border-0 shadow-sm bg-light text-center p-3">
-                        <div class="text-muted small fw-bold text-uppercase">Distância</div>
+                        <div class="text-muted small fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Distância</div>
                         <div id="resDistancia" class="h3 mb-0 mt-1 fw-bold text-dark">-</div>
                     </div>
                 </div>
                 <div class="col-md-3 col-6">
                     <div class="card h-100 border-0 shadow-sm bg-light text-center p-3">
-                        <div class="text-muted small fw-bold text-uppercase">Tempo Estimado</div>
+                        <div class="text-muted small fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Tempo Estimado</div>
                         <div id="resTempo" class="h3 mb-0 mt-1 fw-bold text-dark">-</div>
                     </div>
                 </div>
                 <div class="col-md-4 col-12">
                     <div class="card h-100 border-0 shadow-sm text-center p-3 text-white" style="background-color: #2f529d;">
-                        <div class="text-white-50 small fw-bold text-uppercase">Total da Viagem</div>
-                        <div class="h3 mb-0 mt-1 fw-bold">R$ <span id="resCustoTotal">-</span></div>
-                        <div id="alertaTaxaMinima" class="small text-warning fw-bold mt-1 d-none">* Aplicada taxa mínima de frete</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-3 justify-content-center">
-                <div class="col-md-10 text-center">
-                    <a id="btnWhatsApp" href="#" target="_blank" class="btn btn-success btn-lg px-5 py-3 fw-bold shadow-sm w-100 w-md-auto">
-                        <i class="bi bi-whatsapp me-2"></i> Solicitar Entrega pelo WhatsApp
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-4 p-3 bg-light rounded text-muted border-start border-3 border-secondary" style="font-size: 0.9rem;">
-            <i class="bi bi-info-circle-fill me-1 text-primary"></i> 
-            <strong>Observações importantes:</strong> Os valores simulados nesta ferramenta são válidos exclusivamente para coletas e entregas nas cidades de <strong>São José dos Campos</strong> e <strong>Jacareí</strong>. Demandas envolvendo demais regiões estão sujeitas a consulta e orçamento prévio com nossa central.
-        </div>
-
-        <div id="erro" class="mt-4 alert alert-danger d-none" role="alert">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            <span id="erroTexto">Ocorreu um erro ao processar sua requisição.</span>
-        </div>
-        
-    </div>
-</div>
+                        <div class="text-white-50 small fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Total da Viagem</div>
+                        <div class="h2 mb-0 mt-1 fw-bold">R$ <span id="resCustoTotal">-</span></div>
 
         <div class="promo promo-dark promo-full mt-0 p-5 footer-stick" style="background-color: #2f529d;">
     <div class="container">
