@@ -395,7 +395,103 @@
     
     <div class="content pt-0">     
 
-     
+        <div id="section-simulador" class="page-section mt-0 py-5">
+    <div class="container">
+        <div class="heading-block text-center mb-5">
+            <h2>Simule seu Frete em Segundos</h2>
+            <span class="text-muted">Insira as informações de origem, destino e veículo para obter uma estimativa de custos em tempo real.</span>
+        </div>
+
+        <form id="formCalculo" class="m-0">
+            <div class="row g-2 align-items-center">
+                <div class="col-md-2 mb-2 mb-md-0">
+                    <input type="text" class="form-control bg-white" id="cepOrigem" placeholder="CEP Origem" maxlength="9" required>
+                </div>
+                <div class="col-md-3 mb-2 mb-md-0">
+                    <input type="text" class="form-control" id="origem" placeholder="Aguardando CEP..." readonly required>
+                </div>
+                <div class="col-md-1 mb-3 mb-md-0"> 
+                    <input type="text" class="form-control bg-white" id="numOrigem" placeholder="Nº" required>
+                </div>
+
+                <div class="col-md-1 text-center d-none d-md-block text-muted px-0">
+                    <i class="bi bi-arrow-right fs-5"></i>
+                </div>
+
+                <div class="col-md-2 mb-2 mb-md-0">
+                    <input type="text" class="form-control bg-white" id="cepDestino" placeholder="CEP Destino" maxlength="9" required>
+                </div>
+                <div class="col-md-2 mb-2 mb-md-0">
+                    <input type="text" class="form-control" id="destino" placeholder="Aguardando CEP..." readonly required>
+                </div>
+                <div class="col-md-1 mb-2 mb-md-0">
+                    <input type="text" class="form-control bg-white" id="numDestino" placeholder="Nº" required>
+                </div>
+            </div>
+
+            <div class="row g-2 mt-2 align-items-center">
+                <div class="col-md-8 mb-2 mb-md-0">
+                    <select class="form-select bg-white" id="tipoVeiculo" required>
+                        <option value="" disabled selected>Escolha a modalidade de transporte...</option>
+                        <option value="moto">Moto (Entrega Rápida)</option>
+                        <option value="carro de carga">Carro de Carga (Volumes Médios)</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary btn-calc w-100 py-2 m-0" id="btnCalcular" style="background-color: #2f529d; border-color: #2f529d;">
+                        <span class="spinner-border spinner-border-sm loading-spinner me-2" role="status" id="spinner" style="display: none;"></span>
+                        Calcular Orçamento
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div id="resultado" class="mt-4 d-none">
+            <div class="row g-3 justify-content-center">
+                <div class="col-md-3 col-6">
+                    <div class="card h-100 border-0 shadow-sm bg-light text-center p-3">
+                        <div class="text-muted small fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Distância</div>
+                        <div id="resDistancia" class="h3 mb-0 mt-1 fw-bold text-dark">-</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="card h-100 border-0 shadow-sm bg-light text-center p-3">
+                        <div class="text-muted small fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Tempo Estimado</div>
+                        <div id="resTempo" class="h3 mb-0 mt-1 fw-bold text-dark">-</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="card h-100 border-0 shadow-sm text-center p-3 text-white" style="background-color: #2f529d;">
+                        <div class="text-white-50 small fw-bold text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">Total da Viagem</div>
+                        <div class="h2 mb-0 mt-1 fw-bold">R$ <span id="resCustoTotal">-</span></div>
+                        <div id="alertaTaxaMinima" class="small mt-2 text-white-50 d-none" style="font-size: 0.8rem;">
+                            <i class="bi bi-info-circle me-1"></i> Taxa mínima aplicada
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3 justify-content-center">
+                <div class="col-md-10 text-center">
+                    <a id="btnWhatsApp" href="#" target="_blank" class="btn btn-success btn-lg px-5 py-3 fw-bold shadow-sm w-100 w-md-auto" style="background-color: #25d366; border-color: #25d366;">
+                        <i class="bi bi-whatsapp me-2"></i> Solicitar Entrega pelo WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-light rounded text-muted border-start border-3 border-secondary" style="font-size: 0.85rem; line-height: 1.5;">
+            <i class="bi bi-info-circle-fill me-1 text-primary"></i> 
+            <strong>Observações importantes:</strong> Os valores estimados nesta simulação são válidos exclusivamente para coletas e entregas nas cidades de <strong>São José dos Campos</strong> e <strong>Jacareí</strong>. Demandas que envolvam outras regiões estão sujeitas a análise e orçamento específico pela nossa central.
+        </div>
+
+        <div id="erro" class="mt-4 alert alert-danger d-none" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <span id="erroTexto">Ocorreu um erro ao processar sua requisição.</span>
+        </div>
+        
+    </div>
+</div>
 
         <div class="promo promo-dark promo-full mt-0 p-5 footer-stick" style="background-color: #2f529d;">
     <div class="container">
@@ -904,40 +1000,42 @@
         
         if (cepLimpo.length !== 8) return;
 
-        inputEndereco.value = "Buscando endereço...";
+        if (inputEndereco) inputEndereco.value = "Buscando endereço...";
 
         try {
             const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
             const data = await response.json();
 
-            if (!data.erro) {
-                inputEndereco.value = `${data.logradouro}, ${data.bairro} - ${data.localidade}/${data.uf}`;
-            } else {
-                inputEndereco.value = "";
-                alert("CEP não encontrado.");
+            if (inputEndereco) {
+                if (!data.erro) {
+                    inputEndereco.value = `${data.logradouro}, ${data.bairro} - ${data.localidade}/${data.uf}`;
+                } else {
+                    inputEndereco.value = "";
+                    alert("CEP não encontrado.");
+                }
             }
         } catch (error) {
             console.error("Erro na ViaCEP:", error);
-            inputEndereco.value = "";
+            if (inputEndereco) inputEndereco.value = "";
         }
     }
 
-    document.getElementById('cepOrigem').addEventListener('blur', function() {
+    document.getElementById('cepOrigem')?.addEventListener('blur', function() {
         buscarCep(this.value, 'origem');
     });
 
-    document.getElementById('cepDestino').addEventListener('blur', function() {
+    document.getElementById('cepDestino')?.addEventListener('blur', function() {
         buscarCep(this.value, 'destino');
     });
 
-    document.getElementById('formCalculo').addEventListener('submit', async function(e) {
+    document.getElementById('formCalculo')?.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        const enderecoBaseOrigem = document.getElementById('origem').value;
-        const numOrigem = document.getElementById('numOrigem').value;
-        const enderecoBaseDestino = document.getElementById('destino').value;
-        const numDestino = document.getElementById('numDestino').value;
-        const tipoVeiculo = document.getElementById('tipoVeiculo').value;
+        const enderecoBaseOrigem = document.getElementById('origem')?.value || '';
+        const numOrigem = document.getElementById('numOrigem')?.value || '';
+        const enderecoBaseDestino = document.getElementById('destino')?.value || '';
+        const numDestino = document.getElementById('numDestino')?.value || '';
+        const tipoVeiculo = document.getElementById('tipoVeiculo')?.value || '';
 
         const enderecoCompletoOrigem = `${enderecoBaseOrigem}, ${numOrigem}`;
         const enderecoCompletoDestino = `${enderecoBaseDestino}, ${numDestino}`;
@@ -953,12 +1051,13 @@
         const API_BASE_URL = "https://flcentregas.runasp.net"; 
         const url = `${API_BASE_URL}/api/viagem/calcular?origem=${encodeURIComponent(enderecoCompletoOrigem)}&destino=${encodeURIComponent(enderecoCompletoDestino)}&tipoVeiculo=${encodeURIComponent(tipoVeiculo)}`;
 
-        // Reseta o estado visual antes de rodar a busca
-        blocoResultado.classList.add('d-none');
-        blocoErro.classList.add('d-none');
-        alertaTaxaMinima.classList.add('d-none');
-        btnCalcular.disabled = true;
-        spinner.style.display = 'inline-block';
+        // Reseta o estado visual de forma 100% segura (sem travar se o ID não existir)
+        blocoResultado?.classList.add('d-none');
+        blocoErro?.classList.add('d-none');
+        alertaTaxaMinima?.classList.add('d-none');
+        
+        if (btnCalcular) btnCalcular.disabled = true;
+        if (spinner) spinner.style.display = 'inline-block';
 
         try {
             const response = await fetch(url);
@@ -971,8 +1070,13 @@
             const data = await response.json();
             console.log("Resposta da API:", data);
 
-            document.getElementById('resDistancia').innerText = data.distanciaTexto || "N/A";
-            document.getElementById('resTempo').innerText = data.tempoTexto || "N/A";
+            // Preenche os campos se eles existirem na tela
+            const elDistancia = document.getElementById('resDistancia');
+            const elTempo = document.getElementById('resTempo');
+            const elCustoTotal = document.getElementById('resCustoTotal');
+
+            if (elDistancia) elDistancia.innerText = data.distanciaTexto || "N/A";
+            if (elTempo) elTempo.innerText = data.tempoTexto || "N/A";
             
             // Lógica do Preço Mínimo (R$ 9,00)
             let precoFinal = data.custoTotalViagem || 0;
@@ -981,14 +1085,13 @@
             if (precoFinal < 9.00) {
                 precoFinal = 9.00;
                 usouTaxaMinima = true;
-                alertaTaxaMinima.classList.remove('d-none');
+                alertaTaxaMinima?.classList.remove('d-none');
             }
 
-            // Exibe o preço formatado na interface
-            document.getElementById('resCustoTotal').innerText = precoFinal.toFixed(2).replace('.', ',');
+            if (elCustoTotal) elCustoTotal.innerText = precoFinal.toFixed(2).replace('.', ',');
 
             // --- MONTAGEM DA MENSAGEM DO WHATSAPP ---
-            const NUMERO_WHATSAPP = "5512999999999"; // Insira o número da central aqui (com DDD)
+            const NUMERO_WHATSAPP = "5512999999999"; // Substitua pelo número real da central
             
             const textoWhatsApp = `Olá! Gostaria de solicitar uma entrega com base na simulação realizada no site:
             
@@ -999,21 +1102,22 @@
 ⏱️ *Tempo Estimado:* ${data.tempoTexto || 'Não informado'}
 💰 *Valor Estimado:* R$ ${precoFinal.toFixed(2).replace('.', ',')}${usouTaxaMinima ? ' (Valor Mínimo)' : ''}`;
 
-            // Vincula o link gerado ao botão do WhatsApp
-            btnWhatsApp.href = `https://api.whatsapp.com/send?phone=${NUMERO_WHATSAPP}&text=${encodeURIComponent(textoWhatsApp)}`;
+            if (btnWhatsApp) {
+                btnWhatsApp.href = `https://api.whatsapp.com/send?phone=${NUMERO_WHATSAPP}&text=${encodeURIComponent(textoWhatsApp)}`;
+            }
 
-            // Exibe o painel de resultados montado
-            blocoResultado.classList.remove('d-none');
+            // Exibe o painel de resultados
+            blocoResultado?.classList.remove('d-none');
 
         } catch (error) {
             console.error(error);
             if (elementoErroTexto) {
                 elementoErroTexto.innerText = error.message;
             }
-            blocoErro.classList.remove('d-none');
+            blocoErro?.classList.remove('d-none');
         } finally {
-            btnCalcular.disabled = false;
-            spinner.style.display = 'none';
+            if (btnCalcular) btnCalcular.disabled = false;
+            if (spinner) spinner.style.display = 'none';
         }
     });
 </script>
