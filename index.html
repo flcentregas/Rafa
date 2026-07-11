@@ -899,19 +899,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-5 col-lg-12">
-                            <div class="widget subscribe-widget">
-                                <h5>Receba atualizações de rotas e tabelas sazonais diretamente no seu e-mail:</h5>
-                                <div class="widget-subscribe-form-result"></div>
-                                <form id="widget-subscribe-form" action="include/subscribe.php" method="post" class="mb-0">
-                                    <div class="input-group mx-auto">
-                                        <div class="input-group-text"><i class="bi-envelope-plus"></i></div>
-                                        <input type="email" id="widget-subscribe-form-email" name="widget-subscribe-form-email" class="form-control required email" placeholder="Seu e-mail corporativo">
-                                        <button class="btn btn-primary" style="background-color: #2f529d; border-color: #2f529d;" type="submit">Cadastrar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                        
                     </div>
 
                 </div>
@@ -937,7 +925,7 @@
                         <a href="https://wa.me/5512996646492" target="_blank" class="social-icon border-transparent si-small h-bg-google" style="background-color: #25D366;">
                             <i class="bi-whatsapp text-white"></i>
                             <i class="bi-whatsapp text-white"></i>
-                        </a>
+                        </a>  
 
                         <a href="#" class="social-icon border-transparent si-small h-bg-linkedin">
                             <i class="fa-brands fa-linkedin"></i>
@@ -1014,7 +1002,7 @@
             const blocoResultado = document.getElementById('resultado');
             const blocoErro = document.getElementById('erro');
 
-            // URL DA API
+            // URL DA API Alterado
             const API_BASE_URL = "http://flcentregas.runasp.net"; 
 
             const url = `${API_BASE_URL}/api/viagem/calcular?origem=${encodeURIComponent(enderecoCompletoOrigem)}&destino=${encodeURIComponent(enderecoCompletoDestino)}&tipoVeiculo=${encodeURIComponent(tipoVeiculo)}`;
