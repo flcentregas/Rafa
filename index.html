@@ -1031,13 +1031,27 @@
         }
     }
 
-    document.getElementById('cepOrigem')?.addEventListener('blur', function() {
-        buscarCep(this.value, 'origem');
-    });
+    // document.getElementById('cepOrigem')?.addEventListener('blur', function() {
+    //     buscarCep(this.value, 'origem');
+    // });
 
-    document.getElementById('cepDestino')?.addEventListener('blur', function() {
+    // document.getElementById('cepDestino')?.addEventListener('blur', function() {
+    //     buscarCep(this.value, 'destino');
+    // });
+
+    document.getElementById('cepOrigem')?.addEventListener('input', function() {
+    const cepLimpo = this.value.replace(/\D/g, '');
+    if (cepLimpo.length === 8) {
+        buscarCep(this.value, 'origem');
+    }
+});
+
+document.getElementById('cepDestino')?.addEventListener('input', function() {
+    const cepLimpo = this.value.replace(/\D/g, '');
+    if (cepLimpo.length === 8) {
         buscarCep(this.value, 'destino');
-    });
+    }
+});
 
     document.getElementById('formCalculo')?.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -1106,12 +1120,12 @@
             
             const textoWhatsApp = `Olá! Gostaria de solicitar uma entrega com base na simulação realizada no site:
             
-📍 *Origem:* ${enderecoCompletoOrigem}
-🏁 *Destino:* ${enderecoCompletoDestino}
-🏍️ *Modalidade:* ${tipoVeiculo === 'moto' ? 'Moto (Entrega Rápida)' : 'Carro de Carga'}
-📏 *Distância:* ${data.distanciaTexto || 'Não informada'}
-⏱️ *Tempo Estimado:* ${data.tempoTexto || 'Não informado'}
-💰 *Valor Estimado:* R$ ${precoFinal.toFixed(2).replace('.', ',')}${usouTaxaMinima ? ' (Valor Mínimo)' : ''}`;
+            📍 *Origem:* ${enderecoCompletoOrigem}
+            🏁 *Destino:* ${enderecoCompletoDestino}
+            🏍️ *Modalidade:* ${tipoVeiculo === 'moto' ? 'Moto (Entrega Rápida)' : 'Carro de Carga'}
+            📏 *Distância:* ${data.distanciaTexto || 'Não informada'}
+            ⏱️ *Tempo Estimado:* ${data.tempoTexto || 'Não informado'}
+            💰 *Valor Estimado:* R$ ${precoFinal.toFixed(2).replace('.', ',')}${usouTaxaMinima ? ' (Valor Mínimo)' : ''}`;
 
             if (btnWhatsApp) {
                 btnWhatsApp.href = `https://api.whatsapp.com/send?phone=${NUMERO_WHATSAPP}&text=${encodeURIComponent(textoWhatsApp)}`;
