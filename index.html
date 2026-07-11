@@ -395,7 +395,7 @@
     
     <div class="content pt-0">
         
-        <div id="section-simulador" class="page-section mt-0 py-5">
+      <div id="section-simulador" class="page-section mt-0 py-5">
     <div class="container">
         <div class="heading-block text-center">
             <h2>Simule seu Frete em Segundos</h2>
@@ -446,9 +446,8 @@
             </div>
         </form>
 
-        <!-- Bloco de Resposta: Renderizado em formato de Grid de Resumos -->
         <div id="resultado" class="mt-4 d-none">
-            <div class="row g-3">
+            <div class="row g-3 justify-content-center">
                 <div class="col-md-3 col-6">
                     <div class="card h-100 border-0 shadow-sm bg-light text-center p-3">
                         <div class="text-muted small fw-bold text-uppercase">Distância</div>
@@ -461,22 +460,29 @@
                         <div id="resTempo" class="h3 mb-0 mt-1 fw-bold text-dark">-</div>
                     </div>
                 </div>
-                <div class="col-md-3 col-6">
-                    <div class="card h-100 border-0 shadow-sm bg-light text-center p-3">
-                        <div class="text-muted small fw-bold text-uppercase">Custo por KM</div>
-                        <div class="h3 mb-0 mt-1 fw-bold text-dark">R$ <span id="resCustoKm">-</span></div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
+                <div class="col-md-4 col-12">
                     <div class="card h-100 border-0 shadow-sm text-center p-3 text-white" style="background-color: #2f529d;">
                         <div class="text-white-50 small fw-bold text-uppercase">Total da Viagem</div>
                         <div class="h3 mb-0 mt-1 fw-bold">R$ <span id="resCustoTotal">-</span></div>
+                        <div id="alertaTaxaMinima" class="small text-warning fw-bold mt-1 d-none">* Aplicada taxa mínima de frete</div>
                     </div>
+                </div>
+            </div>
+
+            <div class="row mt-3 justify-content-center">
+                <div class="col-md-10 text-center">
+                    <a id="btnWhatsApp" href="#" target="_blank" class="btn btn-success btn-lg px-5 py-3 fw-bold shadow-sm w-100 w-md-auto">
+                        <i class="bi bi-whatsapp me-2"></i> Solicitar Entrega pelo WhatsApp
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- Bloco de Erro Amigável -->
+        <div class="mt-4 p-3 bg-light rounded text-muted border-start border-3 border-secondary" style="font-size: 0.9rem;">
+            <i class="bi bi-info-circle-fill me-1 text-primary"></i> 
+            <strong>Observações importantes:</strong> Os valores simulados nesta ferramenta são válidos exclusivamente para coletas e entregas nas cidades de <strong>São José dos Campos</strong> e <strong>Jacareí</strong>. Demandas envolvendo demais regiões estão sujeitas a consulta e orçamento prévio com nossa central.
+        </div>
+
         <div id="erro" class="mt-4 alert alert-danger d-none" role="alert">
             <i class="bi bi-exclamation-triangle-fill me-2"></i>
             <span id="erroTexto">Ocorreu um erro ao processar sua requisição.</span>
@@ -1035,6 +1041,8 @@
         const blocoResultado = document.getElementById('resultado');
         const blocoErro = document.getElementById('erro');
         const elementoErroTexto = document.getElementById('erroTexto');
+        const alertaTaxaMinima = document.getElementById('alertaTaxaMinima');
+        const btnWhatsApp = document.getElementById('btnWhatsApp');
 
         const API_BASE_URL = "https://flcentregas.runasp.net"; 
         const url = `${API_BASE_URL}/api/viagem/calcular?origem=${encodeURIComponent(enderecoCompletoOrigem)}&destino=${encodeURIComponent(enderecoCompletoDestino)}&tipoVeiculo=${encodeURIComponent(tipoVeiculo)}`;
@@ -1042,6 +1050,7 @@
         // Reseta o estado visual antes de rodar a busca
         blocoResultado.classList.add('d-none');
         blocoErro.classList.add('d-none');
+        alertaTaxaMinima.classList.add('d-none');
         btnCalcular.disabled = true;
         spinner.style.display = 'inline-block';
 
@@ -1056,16 +1065,36 @@
             const data = await response.json();
             console.log("Resposta da API:", data);
 
-            // Injeta os dados da resposta nos elementos HTML mapeados
             document.getElementById('resDistancia').innerText = data.distanciaTexto || "N/A";
             document.getElementById('resTempo').innerText = data.tempoTexto || "N/A";
             
-            // Tratamento e formatação de valores decimais/moeda (Ex: 1.5 -> 1,50)
-            const custoKm = data.custoPorKm ? data.custoPorKm.toFixed(2).replace('.', ',') : "0,00";
-            const custoTotal = data.custoTotalViagem ? data.custoTotalViagem.toFixed(2).replace('.', ',') : "0,00";
+            // Lógica do Preço Mínimo (R$ 9,00)
+            let precoFinal = data.custoTotalViagem || 0;
+            let usouTaxaMinima = false;
 
-            document.getElementById('resCustoKm').innerText = custoKm;
-            document.getElementById('resCustoTotal').innerText = custoTotal;
+            if (precoFinal < 9.00) {
+                precoFinal = 9.00;
+                usouTaxaMinima = true;
+                alertaTaxaMinima.classList.remove('d-none');
+            }
+
+            // Exibe o preço formatado na interface
+            document.getElementById('resCustoTotal').innerText = precoFinal.toFixed(2).replace('.', ',');
+
+            // --- MONTAGEM DA MENSAGEM DO WHATSAPP ---
+            const NUMERO_WHATSAPP = "5512999999999"; // Insira o número da central aqui (com DDD)
+            
+            const textoWhatsApp = `Olá! Gostaria de solicitar uma entrega com base na simulação realizada no site:
+            
+📍 *Origem:* ${enderecoCompletoOrigem}
+🏁 *Destino:* ${enderecoCompletoDestino}
+🏍️ *Modalidade:* ${tipoVeiculo === 'moto' ? 'Moto (Entrega Rápida)' : 'Carro de Carga'}
+📏 *Distância:* ${data.distanciaTexto || 'Não informada'}
+⏱️ *Tempo Estimado:* ${data.tempoTexto || 'Não informado'}
+💰 *Valor Estimado:* R$ ${precoFinal.toFixed(2).replace('.', ',')}${usouTaxaMinima ? ' (Valor Mínimo)' : ''}`;
+
+            // Vincula o link gerado ao botão do WhatsApp
+            btnWhatsApp.href = `https://api.whatsapp.com/send?phone=${NUMERO_WHATSAPP}&text=${encodeURIComponent(textoWhatsApp)}`;
 
             // Exibe o painel de resultados montado
             blocoResultado.classList.remove('d-none');
